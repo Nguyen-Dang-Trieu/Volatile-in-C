@@ -27,7 +27,7 @@ Output: x is not greater than y.
 Đoạn chương trình chỉ xảy ra ở `else` và không xảy ra ở phần `if(x > y)` được nên `compiler` sẽ tự động xóa đi đoạn code if(x > y) để tối ưu `tốc độ` và `bộ nhớ`.
 
 ## What is a Volatile Keyword in C ?
-- Từ khóa `Volatile` nó thông báo cho `compiler` biết là giá trị của biến có thể thay đổi bất cứ lúc nào, ngăn chặn việc tối ưu hóa chương trình của compiler.
+- Từ khóa `Volatile` nó thông báo cho `compiler` biết là giá trị của biến có thể thay đổi bất cứ lúc nào, ngăn chặn việc `tối ưu` hóa chương trình của compiler.
 
 ## Syntax
 - To declare a variable volatile, include the keyword volatile before or after the data type in the variable definition.
