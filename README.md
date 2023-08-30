@@ -31,7 +31,7 @@ Output: x is not greater than y.
 => Sử dụng `volatile` đảm bảo rằng giá trị biến sẽ không bị `optimization` do `compiler`, luôn được đọc và ghi trực tiếp từ `memory`.
 
 ## Syntax
-- To declare a variable volatile, include the keyword volatile before or after the data type in the variable definition.
+- To `declare a variable volatile`, include the keyword volatile before or after the data type in the variable definition.
 ~~~cpp
 volatile int foo;
 int volatile foo;
@@ -50,7 +50,7 @@ int volatile * volatile foo;
 - Global variables within a multi-threaded application.
 
 ## Example
-- Example 1: Giả sử bạn đang phát triển một ứng dụng điều khiển một cảm biến nhiệt độ. Cảm biến này liên tục gửi dữ liệu về nhiệt độ đo được tới biến trong mã của bạn. Bạn muốn chắc chắn rằng dữ liệu nhiệt độ luôn được cập nhật chính xác trong biến, ngay cả khi trình biên dịch có thể thực hiện các tối ưu hóa.
+- ***Example 1:*** Giả sử bạn đang phát triển một ứng dụng điều khiển một cảm biến nhiệt độ. Cảm biến này liên tục gửi dữ liệu về nhiệt độ đo được tới biến trong mã của bạn. Bạn muốn chắc chắn rằng dữ liệu nhiệt độ luôn được cập nhật chính xác trong biến, ngay cả khi trình biên dịch có thể thực hiện các tối ưu hóa.
 ~~~cpp
 #include <stdio.h>
 #include <stdbool.h>
@@ -73,7 +73,7 @@ int main() {
 ~~~
 `NOTE`: Nếu không sử dụng `volatile`, trình biên dịch có thể tối ưu hóa và giữ giá trị nhiệt độ trong thanh ghi hoặc cache, không cập nhật giá trị liên tục từ cảm biến.
 
-- Example 2: Memory-mapped peripheral registers.
+- ***Example 2:*** Memory-mapped peripheral registers.
   
   Giả sử ta đang viết mã cho một vi điều khiển nhúng và  muốn đọc giá trị từ thanh ghi ngoại vi điều khiển nút nhấn (button) để biết xem nút đã được nhấn hay chưa.
 ~~~cpp
@@ -93,7 +93,7 @@ int main() {
 ~~~
 `Note:` Nếu không sử dụng `Volatile`, compiler có thể quyết định tối ưu hóa việc truy cập đến biến này bằng cách `lưu trữ giá trị` của biến trong `thanh ghi CPU` và `bộ nhớ cache` thay vì đọc giá trị từ bộ nhớ thực sự => dẫn tới kết quả không mong muốn.
 
-- Example 3: Global variables within a multi-threaded application.
+- ***Example 3:*** Global variables within a multi-threaded application.
 
 Giả sử bạn đang viết một ứng dụng đa luồng để quản lý tài khoản ngân hàng. Bạn có một global variable `balance` để lưu số dư trong tài khoản.
 ~~~cpp
@@ -127,14 +127,16 @@ int main() {
     return 0;
 }
 ~~~
-Trong ví dụ này: 
- - Hàm `withdraw` là một hàm chạy trong thread đồng thời. Nó rút tiền từ tài khoản nếu số dư đủ.
- - Trong hàm `main`, bạn tạo hai thread để rút tiền từ tài khoản với hai số tiền khác nhau.
+***Trong ví dụ này:*** <br>
+   -Hàm `withdraw` là một hàm chạy trong thread đồng thời. Nó rút tiền từ tài khoản nếu số dư đủ.<br>
+   -Trong hàm `main`, bạn tạo hai thread để rút tiền từ tài khoản với hai số tiền khác nhau.<br>
 
-`Vấn đề:` Tuy có vẻ như chương trình trên hoạt động đúng, nhưng thực tế có thể xảy ra vấn đề do các `thread` hoạt động đồng thời và thay đổi `balance`:
- - `Thread 1` và `thread 2` có thể đồng thời kiểm tra điều kiện `balance >= amount`, và cả hai đều thấy số dư đủ để rút.
- - Sau đó, cả hai thread `cùng lúc` cập nhật balance bằng cách trừ amount từ balance.
-`Kết quả:` balance bị giảm quá mức do việc cập nhật không đồng bộ => blance = -400.
-`Giải quyết:`
- - Do `blance` là global variable -> Không có cơ chế đồng bộ hóa.
- - Dùng các thuật toán đồng bộ hóa như mutex, sermaphone,...
+***Vấn đề:*** Tuy có vẻ như chương trình trên hoạt động đúng, nhưng thực tế có thể xảy ra vấn đề do các *thread* hoạt động đồng thời và thay đổi `balance`.<br>
+   -`Thread 1` và `thread 2` có thể đồng thời kiểm tra điều kiện `balance >= amount`, và cả hai đều thấy số dư đủ để rút. <br>
+   -Sau đó, cả hai thread `cùng lúc` cập nhật balance bằng cách trừ amount từ balance. <br>
+
+***Kết quả:*** `balance` bị giảm quá mức do việc cập nhật không đồng bộ => blance = -400.
+
+***Giải quyết:***<br>
+  -Do `blance` là global variable -> Không có cơ chế đồng bộ hóa. <br>
+  -Dùng các thuật toán đồng bộ hóa như mutex, sermaphone,... <br>
