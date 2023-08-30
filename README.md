@@ -50,7 +50,8 @@ int volatile * volatile foo;
 - Global variables within a multi-threaded application.
 
 ## Example
-- ***Example 1:*** Giả sử bạn đang phát triển một ứng dụng điều khiển một cảm biến nhiệt độ. Cảm biến này liên tục gửi dữ liệu về nhiệt độ đo được tới biến trong mã của bạn. Bạn muốn chắc chắn rằng dữ liệu nhiệt độ luôn được cập nhật chính xác trong biến, ngay cả khi compiler có thể thực hiện các tối ưu hóa `(optimizations)`.
+- ***Example 1:*** <br>
+Giả sử, bạn đang phát triển một ứng dụng điều khiển một cảm biến nhiệt độ. Cảm biến này liên tục gửi dữ liệu về nhiệt độ đo được tới biến trong mã của bạn. Bạn muốn chắc chắn rằng dữ liệu nhiệt độ luôn được cập nhật chính xác trong biến, ngay cả khi compiler có thể thực hiện các tối ưu hóa `(optimizations)`.
 ~~~cpp
 #include <stdio.h>
 #include <stdbool.h>
@@ -73,9 +74,8 @@ int main() {
 ~~~
 `NOTE`: Nếu không sử dụng `volatile`, trình biên dịch có thể tối ưu hóa và giữ giá trị nhiệt độ trong `thanh ghi CPU` hoặc `cache`, không cập nhật giá trị liên tục từ cảm biến.
 
-- ***Example 2:*** Memory-mapped peripheral registers.
-  
-  Giả sử ta đang viết mã cho một vi điều khiển nhúng và  muốn đọc giá trị từ thanh ghi ngoại vi điều khiển nút nhấn (button) để biết xem nút đã được nhấn hay chưa.
+- ***Example 2:*** Memory-mapped peripheral registers.<br>
+  Giả sử, ta đang viết mã cho một vi điều khiển nhúng và  muốn đọc giá trị từ thanh ghi ngoại vi điều khiển nút nhấn (button) để biết xem nút đã được nhấn hay chưa.
 ~~~cpp
 #include <stdio.h>
 
@@ -91,11 +91,10 @@ int main() {
     return 0;
 }
 ~~~
-`Note:` Nếu không sử dụng `Volatile`, compiler có thể quyết định tối ưu hóa việc truy cập đến biến này bằng cách `lưu trữ giá trị` của biến trong `thanh ghi CPU` và `bộ nhớ cache` thay vì đọc giá trị từ bộ nhớ thực sự => dẫn tới kết quả không mong muốn.
+`NOTE:` Nếu không sử dụng `Volatile`, compiler có thể quyết định tối ưu hóa việc truy cập đến biến này bằng cách `lưu trữ giá trị` của biến trong `thanh ghi CPU` và `bộ nhớ cache` thay vì đọc giá trị từ bộ nhớ thực sự => dẫn tới kết quả không mong muốn.
 
-- ***Example 3:*** Global variables within a multi-threaded application.
-
-Giả sử bạn đang viết một ứng dụng đa luồng để quản lý tài khoản ngân hàng. Bạn có một global variable `balance` để lưu số dư trong tài khoản.
+- ***Example 3:*** Global variables within a multi-threaded application. <br>
+Giả sử, bạn đang viết một ứng dụng đa luồng `(mutile-thread)` để quản lý tài khoản ngân hàng. Bạn có một global variable `balance` để lưu số dư trong tài khoản.
 ~~~cpp
 #include <stdio.h>
 #include <pthread.h>
