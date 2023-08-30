@@ -28,6 +28,7 @@ Output: x is not greater than y.
 
 ## What is a Volatile Keyword in C ?
 - Keywords `Volatile` nó thông báo cho `compiler` biết là giá trị của biến có thể thay đổi bất cứ lúc nào, ngăn chặn việc `tối ưu` hóa chương trình của compiler.
+  
 => Sử dụng `volatile` đảm bảo rằng giá trị biến sẽ không bị `optimization` do `compiler`, luôn được đọc và ghi trực tiếp từ `memory`.
 
 ## Syntax
