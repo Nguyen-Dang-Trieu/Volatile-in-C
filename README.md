@@ -50,7 +50,7 @@ int volatile * volatile foo;
 - Global variables within a multi-threaded application.
 
 ## Example
-- ***Example 1:*** Giả sử bạn đang phát triển một ứng dụng điều khiển một cảm biến nhiệt độ. Cảm biến này liên tục gửi dữ liệu về nhiệt độ đo được tới biến trong mã của bạn. Bạn muốn chắc chắn rằng dữ liệu nhiệt độ luôn được cập nhật chính xác trong biến, ngay cả khi trình biên dịch có thể thực hiện các tối ưu hóa.
+- ***Example 1:*** Giả sử bạn đang phát triển một ứng dụng điều khiển một cảm biến nhiệt độ. Cảm biến này liên tục gửi dữ liệu về nhiệt độ đo được tới biến trong mã của bạn. Bạn muốn chắc chắn rằng dữ liệu nhiệt độ luôn được cập nhật chính xác trong biến, ngay cả khi compiler có thể thực hiện các tối ưu hóa `(optimizations)`.
 ~~~cpp
 #include <stdio.h>
 #include <stdbool.h>
@@ -71,7 +71,7 @@ int main() {
     return 0;
 }
 ~~~
-`NOTE`: Nếu không sử dụng `volatile`, trình biên dịch có thể tối ưu hóa và giữ giá trị nhiệt độ trong thanh ghi hoặc cache, không cập nhật giá trị liên tục từ cảm biến.
+`NOTE`: Nếu không sử dụng `volatile`, trình biên dịch có thể tối ưu hóa và giữ giá trị nhiệt độ trong `thanh ghi CPU` hoặc `cache`, không cập nhật giá trị liên tục từ cảm biến.
 
 - ***Example 2:*** Memory-mapped peripheral registers.
   
