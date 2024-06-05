@@ -30,6 +30,9 @@ Output: x is not greater than y.
 - Keywords `Volatile` nó thông báo cho `compiler` biết là giá trị của biến có thể thay đổi bất cứ lúc nào, ngăn chặn việc `tối ưu` hóa chương trình của compiler.<br>
 => Khi sử dụng từ khóa `volatile` trong C, để đảm bảo rằng `compiler` sẽ không tối ưu hóa việc truy cập vào biến đó, luôn được đọc và ghi trực tiếp từ `memory`.
 
+<p align="center">
+    <img src="./Images/Cache-Memory-and-Main-Memory.jpg" width="600px" alt="">
+</p>
 ## Syntax
 - To `declare a variable volatile`, include the keyword volatile before or after the data type in the variable definition.
 ~~~cpp
@@ -93,49 +96,3 @@ int main() {
 ~~~
 `NOTE:` Nếu không sử dụng `Volatile`, compiler có thể quyết định tối ưu hóa việc truy cập đến biến này bằng cách `lưu trữ giá trị` của biến trong `thanh ghi CPU` và `bộ nhớ cache` thay vì đọc giá trị từ bộ nhớ thực sự => dẫn tới kết quả không mong muốn.
 
-- ***Example 3:*** Global variables within a multi-threaded application. <br>
-Giả sử, bạn đang viết một ứng dụng đa luồng `(mutile-thread)` để quản lý tài khoản ngân hàng. Bạn có một global variable `balance` để lưu số dư trong tài khoản.
-~~~cpp
-#include <stdio.h>
-#include <pthread.h>
-
-int balance = 1000;
-
-void* withdraw(void* arg) {
-    int amount = *(int*)arg;
-    if (balance >= amount) {
-        balance -= amount;
-        printf("Withdrawn %d. New balance: %d\n", amount, balance);
-    } else {
-        printf("Insufficient balance!\n");
-    }
-    return NULL;
-}
-
-int main() {
-    pthread_t thread1, thread2;
-    int amount1 = 800, amount2 = 600;
-
-    pthread_create(&thread1, NULL, withdraw, &amount1);
-    pthread_create(&thread2, NULL, withdraw, &amount2);
-
-    pthread_join(thread1, NULL);
-    pthread_join(thread2, NULL);
-
-    printf("Final balance: %d\n", balance);
-    return 0;
-}
-~~~
-***Trong ví dụ này:*** <br>
-   -Hàm `withdraw` là một hàm chạy trong thread đồng thời. Nó rút tiền từ tài khoản nếu số dư đủ.<br>
-   -Trong hàm `main`, bạn tạo hai thread để rút tiền từ tài khoản với hai số tiền khác nhau.<br>
-
-***Vấn đề:*** Tuy có vẻ như chương trình trên hoạt động đúng, nhưng thực tế có thể xảy ra vấn đề do các *thread* hoạt động đồng thời và thay đổi `balance`.<br>
-   -`Thread 1` và `thread 2` có thể đồng thời kiểm tra điều kiện `balance >= amount`, và cả hai đều thấy số dư đủ để rút. <br>
-   -Sau đó, cả hai thread `cùng lúc` cập nhật balance bằng cách trừ amount từ balance. <br>
-
-***Kết quả:*** `balance` bị giảm quá mức do việc cập nhật không đồng bộ => blance = -400.
-
-***Giải quyết:***<br>
-  -Do `blance` là global variable -> Không có cơ chế đồng bộ hóa. <br>
-  -Dùng các thuật toán đồng bộ hóa như mutex, sermaphone,... <br>
