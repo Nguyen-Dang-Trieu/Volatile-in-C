@@ -28,11 +28,13 @@ Output: x is not greater than y.
 
 ## What is a Volatile Keyword in C ?
 - Keywords `Volatile` nó thông báo cho `compiler` biết là giá trị của biến có thể thay đổi bất cứ lúc nào, ngăn chặn việc `tối ưu` hóa chương trình của compiler.<br>
-=> Khi sử dụng từ khóa `volatile` trong C, để đảm bảo rằng `compiler` sẽ không tối ưu hóa việc truy cập vào biến đó, luôn được đọc và ghi trực tiếp từ `memory`.
+=> Khi sử dụng từ khóa `volatile` trong C, để đảm bảo rằng `compiler` sẽ không tối ưu hóa việc truy cập vào biến đó, luôn được đọc và ghi trực tiếp từ `Main Memory`.
 
 <p align="center">
     <img src="./Images/Volitale.png" width="600px" alt="">
 </p>
+
+`Note:` Trong `Embedded C`, các biến thường dùng để tương tác với `thanh ghi (Register)` của `Microcontroller` => Ta đang tương tác với `Main memory`. Việc tối ưu hóa của `compiler` có thể dẫn đến việc ta tương tác với `thanh ghi tạm thời của CPU (Cache)`. Trong trường hợp này, các thao tác đọc và ghi biến có thể sẽ thực sự diễn ra trên thanh ghi tạm thời của CPU, không phải trực tiếp trên bộ nhớ chính => Dẫn đến kết quả sai.
 
 ## Syntax
 - To `declare a variable volatile`, include the keyword volatile before or after the data type in the variable definition.
