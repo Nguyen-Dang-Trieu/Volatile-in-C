@@ -31,8 +31,9 @@ Output: x is not greater than y.
 => Khi sử dụng từ khóa `volatile` trong C, để đảm bảo rằng `compiler` sẽ không tối ưu hóa việc truy cập vào biến đó, luôn được đọc và ghi trực tiếp từ `memory`.
 
 <p align="center">
-    <img src="./Images/Cache-Memory-and-Main-Memory.jpg" width="600px" alt="">
+    <img src="./Images/Volitale.png" width="600px" alt="">
 </p>
+
 ## Syntax
 - To `declare a variable volatile`, include the keyword volatile before or after the data type in the variable definition.
 ~~~cpp
